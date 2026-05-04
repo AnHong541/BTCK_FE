@@ -1,118 +1,30 @@
 import Link from "next/link";
 import { FacebookOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 
-// ===== CONSTANTS & STYLES =====
-const COLORS = {
-  gradient: "linear-gradient(90deg, #d4a500 0%, #ffd700 100%)",
-  white: "#fff",
-};
-
-const STYLES = {
-  footer: {
-    background: COLORS.gradient,
-    padding: "24px 32px",
-  },
-  container: {
-    maxWidth: "2280px",
-    margin: "0 auto",
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    gap: "16px",
-  },
-  topSection: {
-    display: "flex" as const,
-    alignItems: "flex-start" as const,
-    gap: "16px",
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    objectFit: "contain" as const,
-  },
-  socialIcons: {
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    gap: "8px",
-  },
-  icon: {
-    fontSize: "20px",
-    color: COLORS.white,
-    cursor: "pointer",
-  },
-  copyright: {
-    color: COLORS.white,
-    fontSize: "14px",
-    fontWeight: 500,
-    margin: 0,
-    textAlign: "center" as const,
-  },
-};
-
-const SOCIAL_LINKS = [
-  {
-    href: "https://facebook.com",
-    icon: FacebookOutlined,
-    label: "Facebook",
-    target: "_blank" as const,
-  },
-  {
-    href: "mailto:contact@company.com",
-    icon: MailOutlined,
-    label: "Email",
-  },
-  {
-    href: "tel:+1234567890",
-    icon: PhoneOutlined,
-    label: "Phone",
-  },
+const SOCIALS = [
+  { href: "https://facebook.com", icon: FacebookOutlined, label: "Facebook", target: "_blank" as const },
+  { href: "mailto:contact@company.com", icon: MailOutlined, label: "Email" },
+  { href: "tel:+1234567890", icon: PhoneOutlined, label: "Phone" },
 ];
 
-const COPYRIGHT_TEXT = "©2026 - 2026 Two-member limited liability company Inc.";
-
-// ===== COMPONENTS =====
-function LogoSection() {
-  return (
-    <img
-      src="/logo.png"
-      alt="Logo"
-      style={STYLES.logo}
-    />
-  );
-}
-
-function SocialMediaIcons() {
-  return (
-    <div style={STYLES.socialIcons}>
-      {SOCIAL_LINKS.map((link) => {
-        const Icon = link.icon;
-        return (
-          <Link
-            key={link.label}
-            href={link.href}
-            {...(link.target && { target: link.target })}
-          >
-            <Icon style={STYLES.icon} />
-          </Link>
-        );
-      })}
-    </div>
-  );
-}
-
-function CopyrightText() {
-  return <p style={STYLES.copyright}>{COPYRIGHT_TEXT}</p>;
-}
-
-// ===== MAIN COMPONENT =====
 export default function Footer() {
   return (
-    <footer style={STYLES.footer}>
-      <div style={STYLES.container}>
-        <div style={STYLES.topSection}>
-          <LogoSection />
-          <SocialMediaIcons />
+    <footer className="bg-gradient-to-r from-[#d4a500] to-[#ffd700] px-8 py-6">
+      <div className="max-w-[2280px] mx-auto flex flex-col gap-4">
+        <div className="flex items-start gap-4">
+          <img src="/logo.png" alt="Logo" className="w-20 h-20" />
+          <div className="flex flex-col gap-2">
+            {SOCIALS.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link key={link.label} href={link.href} {...(link.target && { target: link.target })}>
+                  <Icon className="text-xl text-white cursor-pointer hover:opacity-80" />
+                </Link>
+              );
+            })}
+          </div>
         </div>
-        <CopyrightText />
+        <p className="text-white text-sm font-medium text-center">©2026 - 2026 Two-member limited liability company Inc.</p>
       </div>
     </footer>
   );
