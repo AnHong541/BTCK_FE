@@ -4,10 +4,8 @@ export default function LoginLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-          {children}
-      </body>
-    </html>
+    <div className="antialiased">
+      {children}
+    </div>
   );
 }

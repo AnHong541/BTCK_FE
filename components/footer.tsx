@@ -13,7 +13,7 @@ const STYLES = {
     padding: "24px 32px",
   },
   container: {
-    maxWidth: "1280px",
+    maxWidth: "2280px",
     margin: "0 auto",
     display: "flex" as const,
     flexDirection: "column" as const,
@@ -25,8 +25,8 @@ const STYLES = {
     gap: "16px",
   },
   logo: {
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
     objectFit: "contain" as const,
   },
   socialIcons: {
@@ -73,7 +73,7 @@ const COPYRIGHT_TEXT = "©2026 - 2026 Two-member limited liability company Inc."
 function LogoSection() {
   return (
     <img
-      src="https://i.pinimg.com/originals/bf/79/0a/bf790a83f973ccba362e4c8ff0d6b352.jpg"
+      src="/logo.png"
       alt="Logo"
       style={STYLES.logo}
     />

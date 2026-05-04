@@ -7,7 +7,7 @@ export default function TrangChu() {
         <div className="flex justify-center">
           <div className="rounded-lg overflow-hidden w-80 h-96">
             <img 
-              src="https://content.imageresizer.com/images/memes/Surprised-Black-Guy-meme-7.jpg" 
+              src="/logo.png" 
               alt="avatar" 
               className="w-full h-full object-cover"
             />
