@@ -122,7 +122,7 @@ const handleMapClick = (name: string, centroid: [number, number]) => {
             VN
           </div>
           <div>
-            <h1 className="text-xl font-display font-bold text-gold-100 tracking-tight cursor-pointer" onClick={() => { setSelectedProvince(null); setSelectedBattle(null); setMapPosition({center:[106, 16], zoom: 1}); }}>VIỆT NAM SỬ VIỆT</h1>
+            <h1 className="text-xl font-display font-bold text-gold-100 tracking-tight cursor-pointer" onClick={() => { setSelectedProvince(null); setSelectedBattle(null); setMapPosition({center:[106, 16], zoom: 1}); }}>LỊCH SỬ ĐẤU TRANH CỦA VIỆT NAM</h1>
             <p className="text-[10px] uppercase tracking-[0.3em] text-gold-400/60 font-bold">Bản đồ tương tác lịch sử</p>
           </div>
         </div>
