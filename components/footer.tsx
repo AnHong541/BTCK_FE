@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-6">
               <img
-                src="https://i.pinimg.com/originals/bf/79/0a/bf790a83f973ccba362e4c8ff0d6b352.jpg"
+                src="/logo.png"
                 alt="Logo"
                 className="h-10 w-10 rounded-full border border-gold-400/50"
               />
