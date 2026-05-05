@@ -27,7 +27,7 @@ export default function Header() {
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
         {/* Logo Section */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-gold-400 shadow-[0_0_15px_rgba(200,169,110,0.3)] transition-transform group-hover:scale-105">
+          <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-gold-400 shadow-[0_0_20px_rgba(140,109,49,0.3)] transition-transform group-hover:scale-105">
             <img
               src="/logo.png"
               alt="Logo"

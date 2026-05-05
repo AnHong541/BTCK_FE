@@ -1,4 +1,4 @@
-import { BattleInfo } from "@/types";
+import { BattleInfo, HistoryItem } from "@/types";
 
 export const ALL_PROVINCES = [
   "An Giang", "Bà Rịa - Vũng Tàu", "Bạc Liêu", "Bắc Giang", "Bắc Kạn", "Bắc Ninh", "Bến Tre", "Bình Dương", "Bình Định", "Bình Phước", "Bình Thuận", "Cà Mau", "Cao Bằng", "Cần Thơ", "Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương", "Hải Phòng", "Hậu Giang", "Hòa Bình", "Hưng Yên", "Khánh Hòa", "Kiên Giang", "Kon Tum", "Lai Châu", "Lạng Sơn", "Lào Cai", "Lâm Đồng", "Long An", "Nam Định", "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La", "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "TP. Hồ Chí Minh", "Trà Vinh", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Yên Bái", "Quần đảo Hoàng Sa", "Quần đảo Trường Sa"
@@ -119,15 +119,189 @@ export const COMMANDERS = [
   }
 ];
 
-export const HISTORY_ITEMS = [
+export const HISTORY_ITEMS: HistoryItem[] = [
   {
-    id: "h1",
-    title: "Giải phóng miền Nam",
-    date: "30/04/1975",
-    description: "Kết thúc 21 năm kháng chiến chống Mỹ, thống nhất đất nước.",
+    id: "1",
+    title: "Toàn quốc kháng chiến",
+    date: "19/12/1946",
+    era: "Kháng Pháp",
+    tag: "Mở đầu",
+    description: "Đêm 19/12/1946, Chủ tịch Hồ Chí Minh ra Lời kêu gọi toàn quốc kháng chiến. Quân dân Hà Nội chiến đấu 60 ngày đêm trong lòng địch, giam chân 6.000 quân Pháp để hậu phương kháng chiến được xây dựng vững chắc.",
+    commander: "Chủ tịch Hồ Chí Minh, Tướng Vương Thừa Vũ",
+    troops: "Vệ quốc quân + Tự vệ Hà Nội",
+    casualty: "Kìm chân địch 60 ngày đêm",
+    result: "Bảo toàn lực lượng kháng chiến",
+    significance: "Mở đầu cuộc kháng chiến trường kỳ 9 năm chống Pháp",
+  },
+  {
+    id: "2",
+    title: "Chiến dịch Việt Bắc Thu Đông",
+    date: "7/10 – 22/12/1947",
+    era: "Kháng Pháp",
+    tag: "Phản công",
+    description: "Pháp huy động 12.000 quân tấn công căn cứ địa Việt Bắc hòng tiêu diệt cơ quan đầu não kháng chiến. Quân dân ta phản công quyết liệt, tiêu diệt và bắt sống hàng nghìn tên địch.",
+    commander: "Đại tướng Võ Nguyên Giáp",
+    troops: "Các đại đoàn chủ lực + dân quân du kích",
+    casualty: "Địch: 6.000 bị loại, 16 máy bay bị bắn hạ",
+    result: "Phá tan âm mưu đánh nhanh thắng nhanh của Pháp",
+    significance: "Khẳng định đường lối kháng chiến trường kỳ của Đảng",
+  },
+  {
+    id: "3",
+    title: "Chiến dịch Biên Giới",
+    date: "16/9 – 14/10/1950",
+    era: "Kháng Pháp",
+    tag: "Bước ngoặt",
+    description: "Ta chủ động mở chiến dịch tấn công trên tuyến biên giới Việt–Trung, tiêu diệt nhiều binh đoàn Pháp, khai thông biên giới, nối liền với phe xã hội chủ nghĩa.",
+    commander: "Đại tướng Võ Nguyên Giáp, Chủ tịch Hồ Chí Minh trực tiếp chỉ đạo",
+    troops: "Đại đoàn 308, 209, 174",
+    casualty: "Địch: 8.000 bị loại, thu 3.000 tấn vũ khí",
+    result: "Khai thông biên giới Việt–Trung",
+    significance: "Bước ngoặt chiến lược, ta giành quyền chủ động trên chiến trường",
+  },
+  {
+    id: "4",
+    title: "Chiến dịch Hòa Bình",
+    date: "10/12/1951 – 25/2/1952",
+    era: "Kháng Pháp",
+    tag: "Tiến công",
+    description: "Quân ta tiến công địch ở Hòa Bình, buộc Pháp phải rút khỏi vùng này sau khi chịu tổn thất nặng nề. Chiến dịch củng cố vùng tự do liên khu 3 và 4.",
+    commander: "Đại tướng Võ Nguyên Giáp",
+    troops: "Đại đoàn 308, 312, 320",
+    casualty: "Địch: 22.000 bị loại",
+    result: "Pháp rút khỏi Hòa Bình",
+    significance: "Mở rộng vùng tự do, củng cố hậu phương kháng chiến",
+  },
+  {
+    id: "5",
+    title: "Chiến dịch Tây Bắc",
+    date: "14/10 – 10/12/1952",
+    era: "Kháng Pháp",
+    tag: "Tiến công",
+    description: "Quân ta giải phóng vùng Tây Bắc rộng lớn gồm Sơn La, Lai Châu, tạo bàn đạp tiến lên Điện Biên Phủ. Đây là chiến dịch quy mô lớn nhất từ trước đến nay.",
+    commander: "Đại tướng Võ Nguyên Giáp",
+    troops: "Đại đoàn 308, 312, 316",
+    casualty: "Địch: 6.000 bị loại",
+    result: "Giải phóng toàn bộ Tây Bắc",
+    significance: "Tạo bàn đạp chiến lược cho chiến dịch Điện Biên Phủ",
+  },
+  {
+    id: "6",
+    title: "Chiến dịch Điện Biên Phủ",
+    date: "13/3 – 7/5/1954",
+    era: "Kháng Pháp",
+    tag: "Đỉnh điểm",
+    description: "Chiến dịch lịch sử đập tan tập đoàn cứ điểm mạnh nhất Đông Dương. 56 ngày đêm chiến đấu kiên cường, quân dân ta đã làm nên chiến thắng vang dội khắp năm châu bốn biển.",
+    commander: "Đại tướng Võ Nguyên Giáp",
+    troops: "5 Đại đoàn, 55.000 quân + 261.000 dân công",
+    casualty: "Pháp: 16.200 bị bắt, 2.293 tử trận. Ta: ~8.000 hy sinh",
+    result: "Pháp đầu hàng, ký Hiệp định Genève 20/7/1954",
+    significance: "Chấm dứt 9 năm kháng chiến chống Pháp, lập lại hòa bình ở Đông Dương",
+  },
+  {
+    id: "7",
+    title: "Đồng Khởi",
+    date: "17/1/1960",
     era: "Kháng Mỹ",
-    tag: "Chiến thắng"
-  }
+    tag: "Mở đầu",
+    description: "Phong trào Đồng Khởi bùng nổ tại Bến Tre do bà Nguyễn Thị Định lãnh đạo, nhanh chóng lan rộng khắp miền Nam. Nhân dân nổi dậy phá ấp chiến lược, giải phóng nhiều vùng nông thôn.",
+    commander: "Nguyễn Thị Định",
+    troops: "Nhân dân miền Nam",
+    casualty: "Phá vỡ hàng nghìn ấp chiến lược",
+    result: "Mặt trận Giải phóng miền Nam ra đời 20/12/1960",
+    significance: "Mở đầu cao trào cách mạng toàn miền Nam chống Mỹ-Diệm",
+  },
+  {
+    id: "8",
+    title: "Chiến thắng Ấp Bắc",
+    date: "2/1/1963",
+    era: "Kháng Mỹ",
+    tag: "Chiến thắng",
+    description: "Trận Ấp Bắc ở Mỹ Tho, lần đầu tiên quân Giải phóng đánh thắng quân đội Sài Gòn được Mỹ trang bị hiện đại gồm xe bọc thép M113 và trực thăng.",
+    commander: "Tướng Nguyễn Chí Thanh",
+    troops: "Tiểu đoàn 514 + du kích địa phương",
+    casualty: "Địch: 450 bị loại, 3 máy bay bị bắn hạ",
+    result: "Phá tan huyền thoại bất khả chiến bại của M113",
+    significance: "Chứng minh quân Giải phóng có thể đánh thắng Mỹ-ngụy",
+  },
+  {
+    id: "9",
+    title: "Chiến dịch Mậu Thân",
+    date: "30/1/1968",
+    era: "Kháng Mỹ",
+    tag: "Bước ngoặt",
+    description: "Tổng tiến công và nổi dậy Tết Mậu Thân đồng loạt tấn công 64 thành phố, thị xã toàn miền Nam. Tuy không giữ được các mục tiêu nhưng tạo chấn động chính trị lớn tại Mỹ.",
+    commander: "Đại tướng Võ Nguyên Giáp, Tướng Nguyễn Chí Thanh",
+    troops: "Hơn 80.000 quân Giải phóng",
+    casualty: "Ta: ~45.000 hy sinh. Địch: thiệt hại nặng nề",
+    result: "Johnson tuyên bố không tái tranh cử, Mỹ ngồi vào bàn đàm phán",
+    significance: "Bước ngoặt chiến lược buộc Mỹ xuống thang chiến tranh",
+  },
+  {
+    id: "10",
+    title: "Chiến dịch Đường 9 - Nam Lào",
+    date: "30/1 – 23/3/1971",
+    era: "Kháng Mỹ",
+    tag: "Phản công",
+    description: "Mỹ-ngụy mở chiến dịch Lam Sơn 719 tấn công đường 9 - Nam Lào hòng cắt đứt đường Hồ Chí Minh. Quân ta phản công tiêu diệt hơn 20.000 địch, đập tan chiến lược Việt Nam hóa chiến tranh.",
+    commander: "Tướng Lê Trọng Tấn",
+    troops: "Quân đoàn 70B + các sư đoàn chủ lực",
+    casualty: "Địch: 22.000 bị loại, 556 xe tăng, 651 máy bay",
+    result: "Đập tan chiến dịch Lam Sơn 719",
+    significance: "Phá sản chiến lược Việt Nam hóa chiến tranh của Nixon",
+  },
+  {
+    id: "11",
+    title: "Chiến dịch Xuân Hè - Mùa hè đỏ lửa",
+    date: "30/3 – 9/1972",
+    era: "Kháng Mỹ",
+    tag: "Tiến công",
+    description: "Quân ta mở cuộc tiến công chiến lược trên 3 hướng: Quảng Trị, Tây Nguyên và Đông Nam Bộ. Thành cổ Quảng Trị trở thành biểu tượng bi tráng với 81 ngày đêm chiến đấu.",
+    commander: "Tướng Lê Trọng Tấn, Tướng Hoàng Minh Thảo",
+    troops: "5 Quân đoàn + lực lượng dự bị chiến lược",
+    casualty: "Cả hai phía: hàng chục nghìn thương vong",
+    result: "Giải phóng Quảng Trị 1/5/1972",
+    significance: "Tạo thế mạnh trên bàn đàm phán Paris",
+  },
+  {
+    id: "12",
+    title: "Điện Biên Phủ trên không",
+    date: "18 – 29/12/1972",
+    era: "Kháng Mỹ",
+    tag: "Đỉnh điểm",
+    description: "12 ngày đêm Nixon dùng B-52 ném bom rải thảm Hà Nội và Hải Phòng. Quân dân ta bắn hạ 81 máy bay trong đó có 34 chiếc B-52, buộc Mỹ phải ký Hiệp định Paris.",
+    commander: "Đại tướng Võ Nguyên Giáp",
+    troops: "Bộ đội Phòng không - Không quân",
+    casualty: "Bắn hạ 81 máy bay, 34 chiếc B-52. Phố Khâm Thiên bị san phẳng",
+    result: "Mỹ ký Hiệp định Paris 27/1/1973",
+    significance: "Buộc Mỹ rút quân, chấm dứt can thiệp trực tiếp vào VN",
+  },
+  {
+    id: "13",
+    title: "Chiến dịch Tây Nguyên",
+    date: "10 – 24/3/1975",
+    era: "Kháng Mỹ",
+    tag: "Tổng tiến công",
+    description: "Đòn then chốt mở màn cuộc Tổng tiến công mùa Xuân 1975. Tấn công bất ngờ vào Buôn Ma Thuột khiến toàn bộ Tây Nguyên sụp đổ chỉ trong 2 tuần.",
+    commander: "Tướng Hoàng Minh Thảo",
+    troops: "Quân đoàn 3 + Sư đoàn 316, 320",
+    casualty: "Địch: 2 sư đoàn bị tiêu diệt, toàn Tây Nguyên tan rã",
+    result: "Toàn bộ Tây Nguyên giải phóng",
+    significance: "Tạo bước ngoặt quyết định cho chiến dịch Hồ Chí Minh",
+  },
+  {
+    id: "14",
+    title: "Chiến dịch Hồ Chí Minh",
+    date: "26 – 30/4/1975",
+    era: "Kháng Mỹ",
+    tag: "Thống nhất",
+    description: "5 cánh quân đồng loạt tấn công bao vây Sài Gòn. 10:45 ngày 30/4/1975, xe tăng 843 húc đổ cổng Dinh Độc Lập. Dương Văn Minh tuyên bố đầu hàng vô điều kiện, chấm dứt 30 năm chiến tranh.",
+    commander: "Đại tướng Văn Tiến Dũng",
+    troops: "270.000 quân, 5 cánh quân, hơn 1.000 xe tăng",
+    casualty: "Ngụy quyền tan rã hoàn toàn. Ta: ~7.000 hy sinh",
+    result: "Giải phóng miền Nam, thống nhất đất nước",
+    significance: "Kết thúc 30 năm chiến tranh, non sông thu về một mối",
+  },
 ];
 
 export const CASUALTIES = [
@@ -163,6 +337,7 @@ export const FRONTS = [
     result: "An toàn"
   }
 ];
+
 export const BATTLE_TIMELINE: Record<string, {
   year: string;
   name: string;
@@ -263,7 +438,7 @@ export const BATTLE_TIMELINE: Record<string, {
   ],
   "Bình Định": [
     { year: "1972", name: "Chiến dịch Bắc Bình Định", slug: "chien-dich-bac-binh-dinh" },
-    { year: "3/1975", name: "Giải phóng Bình Định", slug: "giai-phong-binh-dinh" },
+    { year: "3/1975", name: "Giải phóng Bình Định", slug: "giai-phong-binh-duong" },
   ],
   "Phú Yên": [
     { year: "1/4/1975", name: "Giải phóng Tuy Hòa", slug: "giai-phong-tuy-hoa" },
@@ -364,6 +539,7 @@ export const BATTLE_TIMELINE: Record<string, {
     { year: "7/10/1947", name: "Chiến dịch Việt Bắc Thu Đông", slug: "viet-bac-thu-dong" },
   ],
 };
+
 export const BATTLE_DETAILS: Record<string, {
   name: string;
   period: string;
@@ -473,7 +649,7 @@ export const BATTLE_DETAILS: Record<string, {
     troops: "Quân đoàn 2",
     casualty: "Ít thương vong",
     result: "Giải phóng Đà Nẵng trong 1 ngày",
-    description: "Đà Nẵng giải phóng nhanh chóng, mở đường cho cuộc tổng tiến công vào Sài Gòn.",
+    description: "Đà Nẵng giải phóng nhanh chóng, mở đường for cuộc tổng tiến công vào Sài Gòn.",
     events: [
       { year: "29/3/1975", text: "Quân ta tiến vào Đà Nẵng, địch tan rã không kháng cự" },
     ]

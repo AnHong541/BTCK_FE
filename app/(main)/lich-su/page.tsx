@@ -6,13 +6,13 @@ import { HISTORY_ITEMS } from "@/lib/data";
 import { HistoryOutlined, CalendarOutlined, FlagOutlined } from "@ant-design/icons";
 import { HistoryItem } from "@/types";
 
-export default function TimelinePage() {
+export default function LichSuPage() {
   return (
     <div className="min-h-screen bg-wood-900 font-body text-gold-100">
       {/* Hero Section */}
       <div className="relative border-b border-gold-400/20 bg-gradient-to-b from-wood-800 to-wood-900 py-24">
         <div className="absolute inset-0 opacity-10" 
-             style={{ backgroundImage: "radial-gradient(circle at 2px 2px, #c8a96e 1px, transparent 0)", backgroundSize: "60px 60px" }} />
+             style={{ backgroundImage: "radial-gradient(circle at 2px 2px, var(--gold-400) 1px, transparent 0)", backgroundSize: "60px 60px" }} />
         
         <div className="container mx-auto max-w-4xl px-6 text-center relative z-10">
           <motion.div
@@ -49,7 +49,7 @@ function TimelineItem({ item, index }: { item: HistoryItem, index: number }) {
 
   return (
     <div className={`relative flex flex-col md:flex-row items-start justify-between gap-8 ${isEven ? 'md:flex-row-reverse' : ''}`}>
-      <div className="absolute left-1/2 top-4 z-10 hidden h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border-4 border-wood-900 bg-gold-400 text-wood-900 shadow-[0_0_15px_rgba(200,169,110,0.5)] md:flex">
+      <div className="absolute left-1/2 top-4 z-10 hidden h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border-4 border-wood-900 bg-gold-400 text-wood-900 shadow-[0_0_20px_rgba(140,109,49,0.4)] md:flex">
         <FlagOutlined />
       </div>
 

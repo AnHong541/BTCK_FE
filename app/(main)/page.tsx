@@ -237,7 +237,7 @@ const handleMapClick = (name: string, centroid: [number, number]) => {
                       {/* Timeline trận chiến */}
                       {BATTLE_TIMELINE[selectedProvince.name] && (
                         <div style={{ marginTop: 24 }}>
-                          <div style={{ fontSize: 10, color: "#9a7d5a", textTransform: "uppercase", letterSpacing: 2, fontFamily: "sans-serif", marginBottom: 12 }}>
+                          <div style={{ fontSize: 10, color: "var(--gold-500)", textTransform: "uppercase", letterSpacing: 2, fontFamily: "sans-serif", marginBottom: 12, fontWeight: "bold" }}>
                             Các trận chiến
                           </div>
                           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -245,10 +245,10 @@ const handleMapClick = (name: string, centroid: [number, number]) => {
                               <Link
                                 key={b.slug}
                                 href={`/tran-chien/${b.slug}`}
-                                style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", background: "#2c1a0e", border: "0.5px solid #c8a96e33", borderRadius: 8, textDecoration: "none" }}
+                                className="flex items-center gap-3 px-4 py-3 bg-wood-800 border border-gold-400/20 rounded-lg no-underline hover:border-gold-400/50 transition-colors"
                               >
-                                <span style={{ fontSize: 10, color: "#c8a96e", fontFamily: "sans-serif", whiteSpace: "nowrap" }}>{b.year}</span>
-                                <span style={{ fontSize: 13, color: "#f0e6d3", fontFamily: "sans-serif" }}>{b.name} →</span>
+                                <span className="text-[10px] text-gold-400 font-sans whitespace-nowrap font-bold">{b.year}</span>
+                                <span className="text-[13px] text-gold-100 font-sans">{b.name} →</span>
                               </Link>
                             ))}
                           </div>

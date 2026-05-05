@@ -34,7 +34,7 @@ const VietnamMap: React.FC<VietnamMapProps> = ({
   };
 
   return (
-    <div style={{ width: "100%", height: "100%", minHeight: "500px", background: "#1a1612" }}>
+    <div style={{ width: "100%", height: "100%", minHeight: "500px", background: "#0c0a09" }}>
       <ComposableMap
         projection="geoMercator"
         projectionConfig={{ scale: 1800, center: [106, 16] }}
@@ -81,15 +81,15 @@ const VietnamMap: React.FC<VietnamMapProps> = ({
                     onClick={() => onProvinceClick(name, centroid)}
                     style={{
                       default: {
-                        fill: isSelected ? "#8B6914" : "#2a2018",
-                        stroke: isSelected ? "#f5d48a" : "#c8a96e33",
+                        fill: isSelected ? "#8c6d31" : "#1c1917",
+                        stroke: isSelected ? "#e5d4b1" : "#c8a96e22",
                         strokeWidth: isSelected ? 2 : 0.5,
                         outline: "none",
                         filter: isSelected ? "url(#glow-strong)" : "none",
                         transition: "fill 400ms ease, stroke 400ms ease",
                       },
                       hover: {
-                        fill: "#c8a96e44",
+                        fill: "#c8a96e33",
                         stroke: "#c8a96e",
                         strokeWidth: 1,
                         outline: "none",
@@ -124,6 +124,7 @@ const VietnamMap: React.FC<VietnamMapProps> = ({
         </ZoomableGroup>
       </ComposableMap>
     </div>
+
   );
 };
 

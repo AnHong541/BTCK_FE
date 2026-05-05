@@ -85,6 +85,11 @@ export interface HistoryItem {
   description: string;
   tag: string;
   era: string;
+  commander?: string;
+  troops?: string;
+  casualty?: string;
+  result?: string;
+  significance?: string;
 }
 
 export interface MilitaryForce {
