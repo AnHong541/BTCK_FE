@@ -1,61 +1,246 @@
+"use client";
+
 import { BATTLE_DETAILS, BATTLE_TIMELINE } from "@/lib/data";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
+import { motion } from "framer-motion";
+import {
+  ArrowLeftOutlined,
+  EnvironmentOutlined,
+  TeamOutlined,
+  ThunderboltOutlined,
+  TrophyOutlined,
+  AlertOutlined,
+  UserOutlined,
+  ClockCircleOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 
-export default function BattlePage({ params }: { params: { slug: string } }) {
+export default function BattlePage() {
+  const params = useParams<{ slug: string }>();
   const battle = BATTLE_DETAILS[params.slug];
   if (!battle) return notFound();
 
+  const allSlugs = Object.keys(BATTLE_DETAILS);
+  const currentIndex = allSlugs.indexOf(params.slug);
+  const prevSlug = currentIndex > 0 ? allSlugs[currentIndex - 1] : null;
+  const nextSlug = currentIndex < allSlugs.length - 1 ? allSlugs[currentIndex + 1] : null;
+
+  const stats = [
+    { label: "Chỉ huy", value: battle.commander, icon: <UserOutlined /> },
+    { label: "Lực lượng", value: battle.troops, icon: <TeamOutlined /> },
+    { label: "Thương vong", value: battle.casualty, icon: <AlertOutlined /> },
+    { label: "Kết quả", value: battle.result, icon: <TrophyOutlined /> },
+  ];
+
   return (
-    <div style={{ background: "#1a0f07", minHeight: "100vh", fontFamily: "Georgia, serif", padding: "0 0 60px" }}>
-      {/* Header */}
-      <div style={{ background: "linear-gradient(180deg, #2c1a0e, #1a0f07)", padding: "32px", borderBottom: "1px solid #c8a96e33" }}>
-        <Link href="/" style={{ color: "#9a7d5a", fontSize: 12, fontFamily: "sans-serif", textDecoration: "none" }}>
-          ← Trang chủ
-        </Link>
-        <h1 style={{ color: "#f5d48a", fontSize: 28, fontWeight: 400, marginTop: 16, letterSpacing: 2 }}>
-          {battle.name}
-        </h1>
-        <div style={{ color: "#c8a96e", fontSize: 13, marginTop: 6, fontFamily: "sans-serif" }}>
-          {battle.period} · {battle.location}
+    <div className="min-h-screen bg-wood-900 font-body text-gold-100">
+      {/* Hero Banner */}
+      <div className="relative overflow-hidden border-b border-gold-400/20">
+        <div className="absolute inset-0 bg-gradient-to-b from-wood-700/80 via-wood-800/60 to-wood-900" />
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, #c8a96e 1px, transparent 0)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+
+        <div className="relative z-10 container mx-auto max-w-5xl px-6 py-16">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Link
+              href="/tran-chien"
+              className="group mb-10 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold-400 transition-colors hover:text-gold-200"
+            >
+              <ArrowLeftOutlined className="transition-transform group-hover:-translate-x-1" />
+              Tất cả trận chiến
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <span className="inline-flex items-center gap-2 rounded-full bg-gold-400/10 border border-gold-400/20 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-gold-400">
+                <ClockCircleOutlined /> {battle.period}
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-gold-400/5 border border-gold-400/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-gold-400/60">
+                <EnvironmentOutlined /> {battle.location}
+              </span>
+            </div>
+
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-gold-200 mb-4 leading-tight">
+              {battle.name}
+            </h1>
+
+            <div className="h-1 w-20 bg-gradient-to-r from-gold-400 to-gold-400/0 rounded-full" />
+          </motion.div>
         </div>
       </div>
 
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: "32px" }}>
-        {/* Stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 32 }}>
-          {[
-            { label: "Chỉ huy", value: battle.commander },
-            { label: "Lực lượng", value: battle.troops },
-            { label: "Thương vong", value: battle.casualty },
-            { label: "Kết quả", value: battle.result },
-          ].map(s => (
-            <div key={s.label} style={{ background: "#2c1a0e", border: "0.5px solid #c8a96e33", borderRadius: 10, padding: "14px 16px" }}>
-              <div style={{ fontSize: 10, color: "#9a7d5a", textTransform: "uppercase", letterSpacing: 1, fontFamily: "sans-serif", marginBottom: 6 }}>{s.label}</div>
-              <div style={{ fontSize: 13, color: "#f0e6d3", fontFamily: "sans-serif" }}>{s.value}</div>
-            </div>
+      {/* Content */}
+      <div className="container mx-auto max-w-5xl px-6 py-12">
+        {/* Stats Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16"
+        >
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + i * 0.08 }}
+              className="group rounded-2xl border border-gold-400/15 bg-gradient-to-br from-wood-800/80 to-wood-800/40 p-6 hover:border-gold-400/40 transition-all duration-300 hover:shadow-[0_0_30px_rgba(200,169,110,0.08)]"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold-400/10 text-gold-400 text-sm group-hover:bg-gold-400/20 transition-colors">
+                  {s.icon}
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-gold-400/50">
+                  {s.label}
+                </span>
+              </div>
+              <p className="text-sm font-medium text-gold-200 leading-relaxed">
+                {s.value}
+              </p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Mô tả */}
-        <p style={{ color: "#c8a96e", fontSize: 15, lineHeight: 1.8, marginBottom: 32, borderLeft: "2px solid #c8a96e33", paddingLeft: 16 }}>
-          {battle.description}
-        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Main Content - Left 2/3 */}
+          <div className="lg:col-span-2 space-y-12">
+            {/* Description */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.35 }}
+            >
+              <SectionTitle icon={<ThunderboltOutlined />} title="Tổng quan trận chiến" />
+              <div className="rounded-2xl border border-gold-400/10 bg-wood-800/30 p-8">
+                <p className="text-base leading-[1.9] text-gold-100/75 font-light">
+                  {battle.description}
+                </p>
+              </div>
+            </motion.div>
 
-        {/* Timeline sự kiện */}
-        <div style={{ color: "#9a7d5a", fontSize: 11, textTransform: "uppercase", letterSpacing: 2, fontFamily: "sans-serif", marginBottom: 16 }}>
-          Diễn biến
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {battle.events.map((ev, i) => (
-            <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
-              <span style={{ background: "#4a5e3a", color: "#c0dd97", fontSize: 10, padding: "3px 10px", borderRadius: 10, whiteSpace: "nowrap", fontFamily: "sans-serif", marginTop: 2 }}>
-                {ev.year}
-              </span>
-              <span style={{ color: "#f0e6d3", fontSize: 13, lineHeight: 1.7, fontFamily: "sans-serif" }}>{ev.text}</span>
+            {/* Timeline */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.45 }}
+            >
+              <SectionTitle icon={<ClockCircleOutlined />} title="Diễn biến chính" />
+              <div className="space-y-0 relative">
+                <div className="absolute left-[19px] top-4 bottom-4 w-[2px] bg-gradient-to-b from-gold-400/30 via-gold-400/15 to-transparent" />
+
+                {battle.events.map((ev, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
+                    className="relative flex gap-6 py-6 group"
+                  >
+                    <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-gold-400/40 bg-wood-900 text-gold-400 text-xs font-bold group-hover:border-gold-400 group-hover:shadow-[0_0_15px_rgba(200,169,110,0.3)] transition-all duration-300">
+                      {i + 1}
+                    </div>
+                    <div className="flex-1 rounded-xl border border-gold-400/10 bg-wood-800/40 p-5 group-hover:border-gold-400/25 transition-all">
+                      <span className="inline-block text-[10px] font-black text-gold-400 mb-2 uppercase tracking-widest bg-gold-400/10 px-3 py-1 rounded-full">
+                        {ev.year}
+                      </span>
+                      <p className="text-sm leading-relaxed text-gold-100/80">
+                        {ev.text}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Sidebar - Right 1/3 */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5 }}
+            className="space-y-8"
+          >
+            {/* Quick Info Card */}
+            <div className="rounded-2xl border border-gold-400/15 bg-gradient-to-b from-wood-800/60 to-wood-800/20 p-6 sticky top-28">
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gold-400 mb-6 flex items-center gap-2">
+                <span className="h-[1px] w-4 bg-gold-400/30" />
+                Thông tin nhanh
+              </h3>
+
+              <div className="space-y-5">
+                <InfoRow label="Thời gian" value={battle.period} />
+                <InfoRow label="Địa điểm" value={battle.location} />
+                <InfoRow label="Chỉ huy" value={battle.commander} />
+                <InfoRow label="Kết quả" value={battle.result} highlight />
+              </div>
+
+              {/* Navigation */}
+              <div className="mt-8 pt-6 border-t border-gold-400/10 space-y-3">
+                <h4 className="text-[10px] font-black uppercase tracking-widest text-gold-400/40 mb-4">
+                  Trận chiến khác
+                </h4>
+                {prevSlug && (
+                  <Link
+                    href={`/tran-chien/${prevSlug}`}
+                    className="flex items-center gap-3 rounded-xl border border-gold-400/10 bg-wood-900/50 px-4 py-3 text-xs text-gold-100/70 hover:border-gold-400/30 hover:text-gold-200 transition-all group"
+                  >
+                    <ArrowLeftOutlined className="text-gold-400/40 group-hover:text-gold-400" />
+                    <span className="truncate">{BATTLE_DETAILS[prevSlug].name}</span>
+                  </Link>
+                )}
+                {nextSlug && (
+                  <Link
+                    href={`/tran-chien/${nextSlug}`}
+                    className="flex items-center justify-between gap-3 rounded-xl border border-gold-400/10 bg-wood-900/50 px-4 py-3 text-xs text-gold-100/70 hover:border-gold-400/30 hover:text-gold-200 transition-all group"
+                  >
+                    <span className="truncate">{BATTLE_DETAILS[nextSlug].name}</span>
+                    <RightOutlined className="text-gold-400/40 group-hover:text-gold-400" />
+                  </Link>
+                )}
+              </div>
             </div>
-          ))}
+          </motion.div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function SectionTitle({ icon, title }: { icon: React.ReactNode; title: string }) {
+  return (
+    <h2 className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.25em] text-gold-400 mb-6">
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold-400/10">
+        {icon}
+      </span>
+      {title}
+      <span className="flex-1 h-[1px] bg-gold-400/10" />
+    </h2>
+  );
+}
+
+function InfoRow({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div>
+      <div className="text-[10px] font-black uppercase tracking-widest text-gold-400/40 mb-1">
+        {label}
+      </div>
+      <div className={`text-sm leading-relaxed ${highlight ? "text-gold-200 font-bold" : "text-gold-100/70"}`}>
+        {value}
       </div>
     </div>
   );

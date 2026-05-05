@@ -782,4 +782,217 @@ export const BATTLE_DETAILS: Record<string, {
       { year: "17/1/1960", text: "Đồng Khởi nổ ra tại Mỏ Cày, Giồng Trôm, Thạnh Phú" },
     ]
   },
+  "bao-ve-hai-phong": {
+    name: "Chiến đấu bảo vệ Hải Phòng",
+    period: "1946 – 1954",
+    location: "Hải Phòng",
+    commander: "Quân dân Hải Phòng",
+    troops: "Vệ quốc quân, tự vệ thành phố",
+    casualty: "Nhiều chiến sĩ hy sinh",
+    result: "Kìm chân địch, bảo vệ hậu phương",
+    description: "Hải Phòng là cảng biển quan trọng nhất miền Bắc. Quân dân Hải Phòng chiến đấu kiên cường bảo vệ thành phố trước sức tấn công của quân Pháp.",
+    events: [
+      { year: "11/1946", text: "Pháp gây hấn tại Hải Phòng, pháo kích khu phố" },
+      { year: "12/1946", text: "Quân dân Hải Phòng tham gia toàn quốc kháng chiến" },
+    ]
+  },
+  "phong-toa-cang-hai-phong": {
+    name: "Chống phong tỏa cảng Hải Phòng",
+    period: "1972",
+    location: "Hải Phòng",
+    commander: "Bộ đội Hải quân, Phòng không",
+    troops: "Hải quân + Phòng không Hải Phòng",
+    casualty: "Bắn hạ nhiều máy bay Mỹ",
+    result: "Cảng Hải Phòng hoạt động trở lại",
+    description: "Mỹ thả thủy lôi phong tỏa cảng Hải Phòng nhằm cắt đứt viện trợ. Quân dân ta kiên cường rà phá thủy lôi, duy trì hoạt động cảng.",
+    events: [
+      { year: "5/1972", text: "Nixon ra lệnh thả thủy lôi phong tỏa cảng Hải Phòng" },
+      { year: "1972", text: "Hải quân ta rà phá thủy lôi, mở luồng cho tàu ra vào" },
+    ]
+  },
+  "bien-gioi-duong-4": {
+    name: "Chiến dịch Biên Giới - Đường 4",
+    period: "1950",
+    location: "Lạng Sơn, Cao Bằng",
+    commander: "Đại tướng Võ Nguyên Giáp",
+    troops: "Đại đoàn 308, 209, 174",
+    casualty: "Địch: 8.000 bị loại",
+    result: "Khai thông biên giới Việt-Trung",
+    description: "Chiến dịch tấn công dọc Đường 4, tiêu diệt nhiều binh đoàn Pháp, khai thông tuyến biên giới Việt-Trung.",
+    events: [
+      { year: "16/9/1950", text: "Quân ta tấn công Đông Khê mở màn chiến dịch" },
+      { year: "10/1950", text: "Pháp rút chạy khỏi Cao Bằng, Lạng Sơn" },
+    ]
+  },
+  "chien-tranh-bien-gioi-1979": {
+    name: "Chiến tranh biên giới phía Bắc",
+    period: "17/2 – 16/3/1979",
+    location: "Lạng Sơn và 6 tỉnh biên giới",
+    commander: "Quân đoàn 1, dân quân biên giới",
+    troops: "Bộ đội chủ lực + dân quân tự vệ",
+    casualty: "Hàng vạn thương vong cả hai phía",
+    result: "Bảo vệ vững chắc biên giới phía Bắc",
+    description: "Trung Quốc huy động 600.000 quân tấn công 6 tỉnh biên giới phía Bắc. Quân dân ta chiến đấu kiên cường bảo vệ từng tấc đất biên cương.",
+    events: [
+      { year: "17/2/1979", text: "Trung Quốc đồng loạt tấn công 6 tỉnh biên giới" },
+      { year: "5/3/1979", text: "Trung Quốc tuyên bố rút quân" },
+      { year: "16/3/1979", text: "Quân Trung Quốc rút hoàn toàn khỏi lãnh thổ Việt Nam" },
+    ]
+  },
+  "chien-dich-bien-gioi": {
+    name: "Chiến dịch Biên Giới",
+    period: "16/9 – 14/10/1950",
+    location: "Cao Bằng, Lạng Sơn",
+    commander: "Đại tướng Võ Nguyên Giáp, Chủ tịch Hồ Chí Minh",
+    troops: "Đại đoàn 308, 209, 174",
+    casualty: "Địch: 8.000 bị loại, thu 3.000 tấn vũ khí",
+    result: "Khai thông biên giới Việt-Trung",
+    description: "Ta chủ động mở chiến dịch tấn công trên tuyến biên giới Việt-Trung, giành quyền chủ động chiến lược trên chiến trường chính Bắc Bộ.",
+    events: [
+      { year: "16/9/1950", text: "Tấn công Đông Khê, mở màn chiến dịch" },
+      { year: "3/10/1950", text: "Pháp rút bỏ Cao Bằng" },
+      { year: "14/10/1950", text: "Chiến dịch kết thúc thắng lợi hoàn toàn" },
+    ]
+  },
+  "chien-dich-hoa-binh": {
+    name: "Chiến dịch Hòa Bình",
+    period: "10/12/1951 – 25/2/1952",
+    location: "Hòa Bình",
+    commander: "Đại tướng Võ Nguyên Giáp",
+    troops: "Đại đoàn 308, 312, 320",
+    casualty: "Địch: 22.000 bị loại",
+    result: "Pháp rút khỏi Hòa Bình",
+    description: "Quân ta tiến công địch ở Hòa Bình, buộc Pháp rút lui, củng cố vùng tự do liên khu 3 và 4.",
+    events: [
+      { year: "12/1951", text: "Quân ta tấn công các vị trí Pháp ở Hòa Bình" },
+      { year: "2/1952", text: "Pháp buộc phải rút khỏi Hòa Bình" },
+    ]
+  },
+  "tet-mau-than-hue": {
+    name: "Tổng tiến công Tết Mậu Thân tại Huế",
+    period: "1968",
+    location: "Thừa Thiên Huế",
+    commander: "Quân Giải phóng miền Nam",
+    troops: "Quân chủ lực + du kích địa phương",
+    casualty: "Hàng nghìn thương vong cả hai phía",
+    result: "Chiếm giữ Huế 26 ngày",
+    description: "Quân Giải phóng tấn công và chiếm giữ thành phố Huế trong 26 ngày, tạo chấn động lớn trong dư luận quốc tế.",
+    events: [
+      { year: "31/1/1968", text: "Quân ta tấn công chiếm Thành nội Huế" },
+      { year: "26/2/1968", text: "Quân ta rút lui sau 26 ngày chiếm giữ" },
+    ]
+  },
+  "giai-phong-hue": {
+    name: "Giải phóng Huế",
+    period: "26/3/1975",
+    location: "Thừa Thiên Huế",
+    commander: "Quân đoàn 2",
+    troops: "Quân đoàn 2 + lực lượng địa phương",
+    casualty: "Địch tan rã nhanh chóng",
+    result: "Giải phóng Huế",
+    description: "Cố đô Huế được giải phóng trong cuộc tổng tiến công mùa Xuân 1975, mở đường tiến vào Đà Nẵng.",
+    events: [
+      { year: "25/3/1975", text: "Quân ta áp sát thành phố Huế" },
+      { year: "26/3/1975", text: "Huế hoàn toàn giải phóng" },
+    ]
+  },
+  "xo-viet-nghe-tinh": {
+    name: "Xô Viết Nghệ Tĩnh",
+    period: "1930 – 1931",
+    location: "Nghệ An, Hà Tĩnh",
+    commander: "Đảng Cộng sản Đông Dương",
+    troops: "Công nhân, nông dân Nghệ Tĩnh",
+    casualty: "Hàng nghìn người bị đàn áp",
+    result: "Phong trào bị dập tắt nhưng để lại bài học quý",
+    description: "Phong trào cách mạng đầu tiên do Đảng lãnh đạo, công nông Nghệ Tĩnh nổi dậy lập chính quyền Xô Viết.",
+    events: [
+      { year: "1/5/1930", text: "Công nhân Vinh - Bến Thủy biểu tình" },
+      { year: "9/1930", text: "Nông dân lập chính quyền Xô Viết ở nhiều xã" },
+    ]
+  },
+  "viet-bac-thu-dong": {
+    name: "Chiến dịch Việt Bắc Thu Đông",
+    period: "7/10 – 22/12/1947",
+    location: "Bắc Kạn, Thái Nguyên, Tuyên Quang",
+    commander: "Đại tướng Võ Nguyên Giáp",
+    troops: "Vệ quốc quân + dân quân du kích",
+    casualty: "Địch: 6.000 bị loại, 16 máy bay bị hạ",
+    result: "Phá tan âm mưu đánh nhanh thắng nhanh",
+    description: "Pháp huy động 12.000 quân tấn công căn cứ Việt Bắc nhằm tiêu diệt cơ quan đầu não. Quân ta phản công thắng lợi.",
+    events: [
+      { year: "7/10/1947", text: "Pháp nhảy dù xuống Bắc Kạn, đổ bộ sông Lô" },
+      { year: "11/1947", text: "Quân ta phục kích đánh địch trên sông Lô" },
+      { year: "22/12/1947", text: "Pháp rút lui, chiến dịch kết thúc thắng lợi" },
+    ]
+  },
+  "giai-phong-phuoc-long": {
+    name: "Giải phóng Phước Long",
+    period: "6/1 – 7/1/1975",
+    location: "Phước Long, Bình Phước",
+    commander: "Quân đoàn 4",
+    troops: "Sư đoàn 7 + xe tăng, pháo binh",
+    casualty: "Địch: 1 tiểu đoàn bị tiêu diệt",
+    result: "Giải phóng hoàn toàn Phước Long",
+    description: "Tỉnh đầu tiên ở miền Nam được giải phóng hoàn toàn, thử phản ứng của Mỹ trước khi mở tổng tiến công.",
+    events: [
+      { year: "6/1/1975", text: "Quân ta tấn công thị xã Phước Long" },
+      { year: "7/1/1975", text: "Phước Long hoàn toàn giải phóng, Mỹ không can thiệp" },
+    ]
+  },
+  "chien-khu-c": {
+    name: "Chiến khu C - Căn cứ Trung ương Cục",
+    period: "1969 – 1972",
+    location: "Tây Ninh",
+    commander: "Trung ương Cục miền Nam",
+    troops: "Quân Giải phóng miền Nam",
+    casualty: "Nhiều trận chiến ác liệt",
+    result: "Bảo vệ an toàn căn cứ đầu não",
+    description: "Chiến khu C ở Tây Ninh là căn cứ của Trung ương Cục miền Nam, nơi chỉ đạo cuộc kháng chiến ở toàn miền Nam.",
+    events: [
+      { year: "1969", text: "Mỹ-ngụy nhiều lần càn quét nhưng không phá được căn cứ" },
+      { year: "1972", text: "Căn cứ tiếp tục hoạt động an toàn" },
+    ]
+  },
+  "tuyen-lua-quang-binh": {
+    name: "Tuyến lửa Quảng Bình",
+    period: "1965 – 1972",
+    location: "Quảng Bình",
+    commander: "Quân dân Quảng Bình",
+    troops: "Bộ đội, dân quân, TNXP",
+    casualty: "Hàng nghìn chiến sĩ hy sinh",
+    result: "Bảo đảm mạch máu giao thông Bắc-Nam",
+    description: "Quảng Bình là tuyến lửa ác liệt nhất, nơi Mỹ ném bom dữ dội nhất. Quân dân kiên cường bảo vệ tuyến giao thông chi viện miền Nam.",
+    events: [
+      { year: "1965", text: "Mỹ bắt đầu ném bom ác liệt Quảng Bình" },
+      { year: "1968", text: "Bảo vệ bến phà Xuân Sơn, Long Đại" },
+    ]
+  },
+  "tham-sat-my-lai": {
+    name: "Thảm sát Mỹ Lai",
+    period: "16/3/1968",
+    location: "Sơn Mỹ, Quảng Ngãi",
+    commander: "Trung úy William Calley (Mỹ)",
+    troops: "Lữ đoàn 11 Bộ binh nhẹ Mỹ",
+    casualty: "504 thường dân bị sát hại",
+    result: "Gây chấn động dư luận thế giới",
+    description: "Quân Mỹ thảm sát 504 thường dân vô tội tại Sơn Mỹ. Sự kiện gây làn sóng phản đối chiến tranh mạnh mẽ trên toàn thế giới.",
+    events: [
+      { year: "16/3/1968", text: "Lính Mỹ tàn sát 504 dân thường tại thôn Mỹ Lai" },
+      { year: "11/1969", text: "Nhà báo Seymour Hersh phanh phui vụ thảm sát" },
+    ]
+  },
+  "dong-bac-chong-my": {
+    name: "Đánh trả không quân Mỹ vùng Đông Bắc",
+    period: "1967 – 1972",
+    location: "Quảng Ninh",
+    commander: "Quân dân Quảng Ninh",
+    troops: "Phòng không, hải quân, dân quân",
+    casualty: "Bắn hạ nhiều máy bay Mỹ",
+    result: "Bảo vệ vùng mỏ Đông Bắc",
+    description: "Quân dân Quảng Ninh chiến đấu bảo vệ vùng mỏ than và tuyến biển Đông Bắc trước không quân và hải quân Mỹ.",
+    events: [
+      { year: "1967", text: "Mỹ leo thang đánh phá vùng Đông Bắc" },
+      { year: "1972", text: "Đánh trả quyết liệt, bảo vệ vùng mỏ" },
+    ]
+  },
 };
