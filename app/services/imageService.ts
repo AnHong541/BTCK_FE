@@ -1,4 +1,4 @@
-import api from '@/app/utils/axios';
+import api from "@/app/utils/axios";
 
 export interface BattleImageApi {
   id: string;
@@ -6,58 +6,89 @@ export interface BattleImageApi {
   url: string;
 }
 
-export const fetchBattleImages = async (): Promise<Record<string, BattleImageApi[]>> => {
+/**
+ * Lấy tất cả hình ảnh chiến trận từ API
+ * @returns Object với key là slug, value là mảng hình ảnh
+ */
+export const fetchBattleImages = async (): Promise<
+  Record<string, BattleImageApi[]>
+> => {
   try {
-    const response = await api.get<BattleImageApi[]>('/products');
-    const data = response.data;
-    
-    // Chuyển đổi dữ liệu từ API thành dạng { "slug": [{id, url}] }
+    const response = await api.get<BattleImageApi[]>("/products");
     const imageMap: Record<string, BattleImageApi[]> = {};
-    
-    data.forEach((item: any) => {
+
+    response.data.forEach((item) => {
       if (!imageMap[item.slug]) {
         imageMap[item.slug] = [];
       }
-      const imageUrl = item.url || item.images; // Lấy url hoặc images (nếu MockAPI tự sinh)
-      if (imageUrl && item.id && item.slug) {
-        imageMap[item.slug].push({ ...item, url: imageUrl });
+
+      if (item.url && item.id && item.slug) {
+        imageMap[item.slug].push(item);
       }
     });
-    
+
     return imageMap;
   } catch (error) {
-    console.error("Lỗi khi gọi API lấy hình ảnh:", error);
-    return {}; 
+    console.error("Lỗi khi lấy hình ảnh từ API:", error);
+    return {};
   }
 };
 
-export const addBattleImage = async (slug: string, url: string): Promise<BattleImageApi | null> => {
+/**
+ * Thêm hình ảnh mới cho chiến trận
+ * @param slug - Mã định danh chiến trận
+ * @param url - Đường dẫn hình ảnh
+ * @returns Hình ảnh vừa tạo hoặc null nếu lỗi
+ */
+export const addBattleImage = async (
+  slug: string,
+  url: string
+): Promise<BattleImageApi | null> => {
   try {
-    // Làm sạch URL: Loại bỏ khoảng trắng thừa và mã hóa lại các ký tự đặc biệt đúng chuẩn
-    // Điều này giúp MockAPI không bị lỗi khi nhận chuỗi có các ký tự lạ
-    let cleanUrl = url.trim();
-    try {
-      // Decode để loại bỏ các mã % thừa, sau đó Encode lại đúng chuẩn URL web
-      cleanUrl = encodeURI(decodeURI(cleanUrl));
-    } catch (e) {
-      // Nếu không decode được thì giữ nguyên
-      console.warn("Không thể chuẩn hóa URL, giữ nguyên link gốc");
-    }
-
-    const res = await api.post<BattleImageApi>('/products', { slug, url: cleanUrl });
-    return res.data;
-  } catch (error: any) {
-    console.error("Lỗi khi thêm ảnh mới vào API:", error.response?.data || error.message);
+    const cleanUrl = normalizeUrl(url);
+    const response = await api.post<BattleImageApi>("/products", {
+      slug,
+      url: cleanUrl,
+    });
+    return response.data;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Lỗi không xác định";
+    console.error("Lỗi khi thêm ảnh:", errorMessage);
     return null;
   }
 };
 
+/**
+ * Xóa hình ảnh khỏi API
+ * @param id - ID của hình ảnh
+ * @returns true nếu thành công, false nếu lỗi
+ */
 export const deleteBattleImage = async (id: string): Promise<boolean> => {
   try {
     await api.delete(`/products/${id}`);
     return true;
   } catch (error) {
-    console.error("Lỗi khi xóa ảnh khỏi API:", error);
+    console.error("Lỗi khi xóa ảnh:", error);
     return false;
   }
+};
+
+/**
+ * Chuẩn hóa URL để gửi đến API
+ * @param url - URL gốc
+ * @returns URL đã được chuẩn hóa
+ */
+const normalizeUrl = (url: string): string => {
+  let cleanUrl = url.trim();
+
+  try {
+    cleanUrl = encodeURI(decodeURI(cleanUrl));
+  } catch {
+    console.warn("Không thể chuẩn hóa URL, giữ nguyên");
+  }
+
+  return cleanUrl;
 };
