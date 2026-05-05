@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { BATTLE_DETAILS } from "@/lib/data";
 import { BATTLE_IMAGES } from "@/lib/media";
+import { fetchBattleImages } from "@/app/services/imageService";
 import {
   SearchOutlined,
   ThunderboltOutlined,
@@ -46,15 +47,25 @@ const ERA_COLORS: Record<string, string> = {
 export default function BattleListPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeEra, setActiveEra] = useState<string | null>(null);
+  const [apiImages, setApiImages] = useState<Record<string, string[]>>({});
+
+  React.useEffect(() => {
+    // Gọi API để lấy ảnh khi trang được tải
+    const loadImages = async () => {
+      const imagesFromApi = await fetchBattleImages();
+      setApiImages(imagesFromApi);
+    };
+    loadImages();
+  }, []);
 
   const battles = useMemo(() => {
     return Object.entries(BATTLE_DETAILS).map(([slug, battle]) => ({
       slug,
       ...battle,
       era: detectEra(battle),
-      image: BATTLE_IMAGES[slug]?.[0] || null,
+      image: apiImages[slug]?.[0] || BATTLE_IMAGES[slug]?.[0] || null,
     }));
-  }, []);
+  }, [apiImages]);
 
   const eras = useMemo(() => {
     const eraSet = new Set(battles.map((b) => b.era));

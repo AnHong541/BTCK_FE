@@ -2,7 +2,9 @@
 
 import { BATTLE_DETAILS, BATTLE_TIMELINE } from "@/lib/data";
 import { BATTLE_IMAGES, BATTLE_MAPS } from "@/lib/media";
+import { fetchBattleImages } from "@/app/services/imageService";
 import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
@@ -20,11 +22,24 @@ import {
 export default function BattlePage() {
   const params = useParams<{ slug: string }>();
   const battle = BATTLE_DETAILS[params.slug];
+  
+  const [apiImages, setApiImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const loadImages = async () => {
+      const imagesFromApi = await fetchBattleImages();
+      if (imagesFromApi[params.slug]) {
+        setApiImages(imagesFromApi[params.slug]);
+      }
+    };
+    loadImages();
+  }, [params.slug]);
+
   if (!battle) return notFound();
 
   const battleImages = BATTLE_IMAGES[params.slug] || [];
   const battleMaps = BATTLE_MAPS[params.slug] || [];
-  const allMedia = [...battleImages, ...battleMaps];
+  const allMedia = [...apiImages, ...battleImages, ...battleMaps];
 
   const allSlugs = Object.keys(BATTLE_DETAILS);
   const currentIndex = allSlugs.indexOf(params.slug);
