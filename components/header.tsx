@@ -1,70 +1,67 @@
 "use client";
 
-import { Button } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-const LOGO_SVG = "M22 2C11.5 2 3 10.5 3 21s8.5 19 19 19 19-8.5 19-19-8.5-19-19-19zm0 35c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zm8-20h-7v-7h-2v7h-7v2h7v7h2v-7h7v-2z";
-const MENU = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-  { href: "/login", label: "Login" },
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+const MENU_ITEMS = [
+  { href: "/", label: "Trang chủ" },
+  { href: "/timeline", label: "Dòng thời gian" },
+  { href: "/chi-huy", label: "Chỉ huy" },
+  { href: "/mat-tran", label: "Mặt trận" },
+  { href: "/lich-su", label: "Lịch sử" },
 ];
 
-function Logo() {
+export default function Header() {
   return (
-    <div className="flex items-center gap-4 min-w-[200px]">
-      <img src="/logo.png" alt="Logo" className="w-[50px] h-[50px]" />
-      <svg width="50" height="50" viewBox="0 0 45 45" className="text-[#ac7c01]">
-        <path fill="currentColor" d={LOGO_SVG} />
-      </svg>
-    </div>
-  );
-}
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="sticky top-0 z-50 w-full border-b border-gold-400/20 bg-wood-900/80 backdrop-blur-md"
+    >
+      <div className="container mx-auto flex h-20 items-center justify-between px-6">
+        {/* Logo Section */}
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-gold-400 shadow-[0_0_15px_rgba(200,169,110,0.3)] transition-transform group-hover:scale-105">
+            <img
+              src="https://i.pinimg.com/originals/bf/79/0a/bf790a83f973ccba362e4c8ff0d6b352.jpg"
+              alt="Logo"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xl font-display font-bold tracking-wider text-gold-200">VIỆT NAM</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-gold-400/80">Sử Việt Hùng Ca</span>
+          </div>
+        </Link>
 
-function Navigation() {
-  const router = useRouter();
-  return (
-    <nav className="flex items-center gap-[50px]">
-      {MENU.map(({ href, label }) => (
-        <Button key={href} type="text" onClick={() => router.push(href)} className="!text-white !font-medium">
-          {label}
-        </Button>
-      ))}
-    </nav>
-  );
-}
+        {/* Navigation */}
+        <nav className="hidden md:flex items-center gap-8">
+          {MENU_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="relative text-sm font-medium text-gold-100/70 transition-colors hover:text-gold-200 group py-2"
+            >
+              {item.label}
+              <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-gold-400 transition-all duration-300 group-hover:w-full" />
+            </Link>
+          ))}
+        </nav>
 
-function SearchBar() {
-  const [query, setQuery] = useState("");
-  const handleSearch = () => query.trim() && console.log("Search:", query);
-  return (
-    <div className="flex items-center gap-2 px-[6px] py-[6px] bg-white rounded-lg w-[400px]">
-      <input
-        type="text"
-        placeholder="Bạn đang tìm gì..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-        className="flex-1 px-3 py-2 border-none bg-transparent outline-none text-[#333]"
-      />
-      <button onClick={handleSearch} className="px-[14px] py-2 bg-gradient-to-r from-[#d4a500] to-[#f0d11e] border-none rounded-md cursor-pointer text-white text-lg hover:opacity-90">
-        <SearchOutlined />
-      </button>
-    </div>
-  );
-}
-
-export default function AppHeader() {
-  return (
-    <header className="flex justify-between items-center bg-gradient-to-r from-[#d4a500] to-[#f0d11e] px-8 h-[70px] shadow-md">
-      <Logo />
-      <div className="flex items-center gap-5">
-        <SearchBar />
-        <Navigation />
+        {/* Action Button */}
+        <div className="flex items-center gap-4">
+           <button className="rounded-full border border-gold-400/40 bg-gold-400/10 px-6 py-2 text-xs font-semibold uppercase tracking-wider text-gold-200 transition-all hover:bg-gold-400 hover:text-wood-900 active:scale-95">
+            Khám phá
+          </button>
+        </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
