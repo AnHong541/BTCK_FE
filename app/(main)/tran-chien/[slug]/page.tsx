@@ -1,6 +1,7 @@
 "use client";
 
 import { BATTLE_DETAILS, BATTLE_TIMELINE } from "@/lib/data";
+import { BATTLE_IMAGES, BATTLE_MAPS } from "@/lib/media";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -20,6 +21,10 @@ export default function BattlePage() {
   const params = useParams<{ slug: string }>();
   const battle = BATTLE_DETAILS[params.slug];
   if (!battle) return notFound();
+
+  const battleImages = BATTLE_IMAGES[params.slug] || [];
+  const battleMaps = BATTLE_MAPS[params.slug] || [];
+  const allMedia = [...battleImages, ...battleMaps];
 
   const allSlugs = Object.keys(BATTLE_DETAILS);
   const currentIndex = allSlugs.indexOf(params.slug);
@@ -119,6 +124,31 @@ export default function BattlePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Main Content - Left 2/3 */}
           <div className="lg:col-span-2 space-y-12">
+            
+            {/* Image Gallery */}
+            {allMedia.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="rounded-2xl border border-gold-400/20 overflow-hidden bg-wood-800/50">
+                  {allMedia.map((url, idx) => (
+                    <img 
+                      key={idx} 
+                      src={url} 
+                      alt={`Minh họa trận chiến ${battle.name}`} 
+                      className="w-full h-auto object-cover border-b border-gold-400/10 last:border-b-0"
+                      style={{ maxHeight: '500px' }}
+                    />
+                  ))}
+                  <div className="bg-wood-900/80 p-3 text-center text-[10px] text-gold-400/60 uppercase tracking-widest font-bold">
+                    Tư liệu minh họa trận chiến
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
             {/* Description */}
             <motion.div
               initial={{ opacity: 0 }}

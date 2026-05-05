@@ -38,6 +38,7 @@ export interface BattleDetail {
   locations?: KeyLocation[];
   perspectives?: Perspective[];
   sources?: HistoricalSource[];
+  images?: string[];
 }
 
 export interface BattleInfo {
