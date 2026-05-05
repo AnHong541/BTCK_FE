@@ -13,9 +13,8 @@ function cn(...inputs: ClassValue[]) {
 const MENU_ITEMS = [
   { href: "/", label: "Trang chủ" },
   { href: "/timeline", label: "Dòng thời gian" },
-  { href: "/chi-huy", label: "Chỉ huy" },
-  { href: "/mat-tran", label: "Mặt trận" },
-  { href: "/lich-su", label: "Lịch sử" },
+  { href: "/about", label: "Giới thiệu" },
+  { href: "/contact", label: "Liên hệ" },
 ];
 
 export default function Header() {
@@ -57,9 +56,9 @@ export default function Header() {
 
         {/* Action Button */}
         <div className="flex items-center gap-4">
-           <button className="rounded-full border border-gold-400/40 bg-gold-400/10 px-6 py-2 text-xs font-semibold uppercase tracking-wider text-gold-200 transition-all hover:bg-gold-400 hover:text-wood-900 active:scale-95">
-            Khám phá
-          </button>
+          <Link href="/login" className="rounded-full border border-gold-400/40 bg-gold-400/10 px-6 py-2 text-xs font-semibold uppercase tracking-wider text-gold-200 transition-all hover:bg-gold-400 hover:text-wood-900 active:scale-95 inline-block">
+            Đăng nhập
+          </Link>
         </div>
       </div>
     </motion.header>
