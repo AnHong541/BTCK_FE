@@ -100,10 +100,7 @@ const handleSelectProvince = (province: BattleInfo) => {
 };
 
 const handleMapClick = (name: string, centroid: [number, number]) => {
-  console.log("Tên từ bản đồ:", name);
-  console.log("Normalize:", normalize(name));
   const info = provinces.find(p => normalize(p.name) === normalize(name));
-  console.log("Tìm thấy:", info?.name);
   if (info) {
     setSelectedProvince(info);
     setSelectedBattle(null);

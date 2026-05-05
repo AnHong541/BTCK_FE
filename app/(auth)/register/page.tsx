@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 
-const inputClass = 'w-full px-4 py-3 border border-gray-500 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 font-semibold placeholder:text-gray-600';
+const inputClass = 'w-full px-4 py-3 border border-gold-500/30 bg-wood-700 rounded-lg focus:ring-2 focus:ring-gold-400 focus:border-transparent transition text-gold-100 font-semibold placeholder:text-gold-100/50';
 
 interface PasswordInputProps {
   value: string;
@@ -26,7 +26,7 @@ function PasswordInput({ value, onChange, show, onToggle }: PasswordInputProps) 
       <button
         type="button"
         onClick={onToggle}
-        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800 transition"
+        className="absolute right-3 top-1/2 -translate-y-1/2 text-gold-100/50 hover:text-gold-400 transition"
       >
         {show ? <EyeOutlined className="text-xl" /> : <EyeInvisibleOutlined className="text-xl" />}
       </button>
@@ -64,7 +64,7 @@ export default function RegisterPage() {
     setError('');
     setIsLoading(true);
     try {
-      console.log('Register attempt:', { username: formData.username, email: formData.email, password: formData.password });
+      // TODO: Implement actual registration logic
     } catch (error) {
       setError('Đăng ký thất bại. Vui lòng thử lại.');
     } finally {
@@ -73,10 +73,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-yellow-500 p-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Đăng ký</h1>
-        {error && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">{error}</div>}
+    <div className="min-h-screen flex items-center justify-center bg-wood-900 p-4">
+      <div className="bg-wood-800 border border-gold-500/20 rounded-lg shadow-2xl shadow-black/50 p-8 w-full max-w-md">
+        <h1 className="text-3xl font-bold text-gold-400 mb-8 text-center">Đăng ký</h1>
+        {error && <div className="mb-4 p-3 bg-red-900/50 border border-red-500/50 text-red-200 rounded-lg text-sm">{error}</div>}
         <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="text"
@@ -104,7 +104,7 @@ export default function RegisterPage() {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800 transition"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gold-100/50 hover:text-gold-400 transition"
             >
               {showConfirmPassword ? <EyeOutlined className="text-xl" /> : <EyeInvisibleOutlined className="text-xl" />}
             </button>
@@ -112,14 +112,14 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gold-500 hover:bg-gold-400 text-wood-900 font-bold py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-gold-500/20"
           >
             {isLoading ? 'Đang xử lý...' : 'Đăng ký'}
           </button>
         </form>
-        <div className="mt-6 text-center text-gray-600">
+        <div className="mt-6 text-center text-gold-100/70">
           <span>Đã có tài khoản? </span>
-          <Link href="/login" className="text-gray-600 hover:text-gray-800 font-semibold underline transition">
+          <Link href="/login" className="text-gold-400 hover:text-gold-300 font-semibold underline transition">
             Đăng nhập
           </Link>
         </div>
