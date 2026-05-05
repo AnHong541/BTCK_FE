@@ -47,7 +47,7 @@ const ERA_COLORS: Record<string, string> = {
 export default function BattleListPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeEra, setActiveEra] = useState<string | null>(null);
-  const [apiImages, setApiImages] = useState<Record<string, string[]>>({});
+  const [apiImages, setApiImages] = useState<Record<string, any[]>>({});
 
   React.useEffect(() => {
     // Gọi API để lấy ảnh khi trang được tải
@@ -63,7 +63,7 @@ export default function BattleListPage() {
       slug,
       ...battle,
       era: detectEra(battle),
-      image: apiImages[slug]?.[0] || BATTLE_IMAGES[slug]?.[0] || null,
+      image: apiImages[slug]?.[0]?.url || BATTLE_IMAGES[slug]?.[0] || null,
     }));
   }, [apiImages]);
 

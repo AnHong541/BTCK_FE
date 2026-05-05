@@ -2,7 +2,7 @@
 
 import { BATTLE_DETAILS, BATTLE_TIMELINE } from "@/lib/data";
 import { BATTLE_IMAGES, BATTLE_MAPS } from "@/lib/media";
-import { fetchBattleImages } from "@/app/services/imageService";
+import { fetchBattleImages, addBattleImage, deleteBattleImage, BattleImageApi } from "@/app/services/imageService";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { notFound, useParams } from "next/navigation";
@@ -17,13 +17,21 @@ import {
   UserOutlined,
   ClockCircleOutlined,
   RightOutlined,
+  PlusOutlined,
+  CheckOutlined,
+  LoadingOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 
 export default function BattlePage() {
   const params = useParams<{ slug: string }>();
   const battle = BATTLE_DETAILS[params.slug];
   
-  const [apiImages, setApiImages] = useState<string[]>([]);
+  const [apiImages, setApiImages] = useState<BattleImageApi[]>([]);
+  const [showAddImage, setShowAddImage] = useState(false);
+  const [newImageUrl, setNewImageUrl] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     const loadImages = async () => {
@@ -37,9 +45,38 @@ export default function BattlePage() {
 
   if (!battle) return notFound();
 
-  const battleImages = BATTLE_IMAGES[params.slug] || [];
-  const battleMaps = BATTLE_MAPS[params.slug] || [];
-  const allMedia = [...apiImages, ...battleImages, ...battleMaps];
+  type MediaItem = { url: string; isApi: boolean; id?: string };
+
+  const battleImages: MediaItem[] = BATTLE_IMAGES[params.slug]?.map(url => ({ url, isApi: false })) || [];
+  const battleMaps: MediaItem[] = BATTLE_MAPS[params.slug]?.map(url => ({ url, isApi: false })) || [];
+  const apiImagesMapped: MediaItem[] = apiImages.map(img => ({ url: img.url, isApi: true, id: img.id }));
+  const allMedia: MediaItem[] = [...apiImagesMapped, ...battleImages, ...battleMaps];
+
+  const handleAddImage = async () => {
+    if (!newImageUrl) return;
+    setIsSubmitting(true);
+    const addedImage = await addBattleImage(params.slug, newImageUrl);
+    if (addedImage) {
+      setApiImages([...apiImages, addedImage]);
+      setNewImageUrl("");
+      setShowAddImage(false);
+    } else {
+      alert("Lỗi khi lưu ảnh. Vui lòng thử lại!");
+    }
+    setIsSubmitting(false);
+  };
+
+  const handleDeleteImage = async (id: string) => {
+    if (!confirm("Bạn có chắc chắn muốn xóa ảnh này không?")) return;
+    setDeletingId(id);
+    const success = await deleteBattleImage(id);
+    if (success) {
+      setApiImages(apiImages.filter(img => img.id !== id));
+    } else {
+      alert("Lỗi khi xóa ảnh. Vui lòng thử lại!");
+    }
+    setDeletingId(null);
+  };
 
   const allSlugs = Object.keys(BATTLE_DETAILS);
   const currentIndex = allSlugs.indexOf(params.slug);
@@ -148,14 +185,25 @@ export default function BattlePage() {
                 transition={{ delay: 0.3 }}
               >
                 <div className="rounded-2xl border border-gold-400/20 overflow-hidden bg-wood-800/50">
-                  {allMedia.map((url, idx) => (
-                    <img 
-                      key={idx} 
-                      src={url} 
-                      alt={`Minh họa trận chiến ${battle.name}`} 
-                      className="w-full h-auto object-cover border-b border-gold-400/10 last:border-b-0"
-                      style={{ maxHeight: '500px' }}
-                    />
+                  {allMedia.map((media, idx) => (
+                    <div key={idx} className="relative group border-b border-gold-400/10 last:border-b-0">
+                      <img 
+                        src={media.url} 
+                        alt={`Minh họa trận chiến ${battle.name}`} 
+                        className="w-full h-auto object-cover"
+                        style={{ maxHeight: '500px' }}
+                      />
+                      {media.isApi && media.id && (
+                        <button
+                          onClick={() => handleDeleteImage(media.id!)}
+                          disabled={deletingId === media.id}
+                          className="absolute top-4 right-4 bg-red-500/80 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 disabled:opacity-50"
+                          title="Xóa ảnh"
+                        >
+                          {deletingId === media.id ? <LoadingOutlined /> : <DeleteOutlined />}
+                        </button>
+                      )}
+                    </div>
                   ))}
                   <div className="bg-wood-900/80 p-3 text-center text-[10px] text-gold-400/60 uppercase tracking-widest font-bold">
                     Tư liệu minh họa trận chiến
@@ -163,6 +211,41 @@ export default function BattlePage() {
                 </div>
               </motion.div>
             )}
+
+            {/* Thêm ảnh mới */}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gold-400 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold-400"></span>
+                  {allMedia.length === 0 ? "Chưa có ảnh tư liệu" : "Tư liệu minh họa"}
+                </h3>
+                <button 
+                  onClick={() => setShowAddImage(!showAddImage)} 
+                  className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-wood-900 bg-gold-400 px-3 py-1.5 rounded-lg hover:bg-gold-300 transition-colors"
+                >
+                  <PlusOutlined /> Thêm ảnh
+                </button>
+              </div>
+
+              {showAddImage && (
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="flex gap-2 mb-8">
+                  <input 
+                    type="text" 
+                    value={newImageUrl} 
+                    onChange={(e) => setNewImageUrl(e.target.value)} 
+                    placeholder="Dán đường link ảnh (URL) vào đây..."
+                    className="flex-1 bg-wood-800/80 border border-gold-400/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold-400/50 text-gold-100 placeholder:text-gold-100/30"
+                  />
+                  <button 
+                    onClick={handleAddImage} 
+                    disabled={isSubmitting || !newImageUrl}
+                    className="bg-gold-400 text-wood-900 px-5 py-3 rounded-xl text-sm font-bold hover:bg-gold-300 disabled:opacity-50 transition-all flex items-center justify-center min-w-[60px]"
+                  >
+                    {isSubmitting ? <LoadingOutlined /> : <CheckOutlined />}
+                  </button>
+                </motion.div>
+              )}
+            </motion.div>
 
             {/* Description */}
             <motion.div
