@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { BATTLE_DETAILS } from "@/lib/data";
+import { BATTLE_IMAGES } from "@/lib/media";
 import {
   SearchOutlined,
   ThunderboltOutlined,
@@ -51,6 +52,7 @@ export default function BattleListPage() {
       slug,
       ...battle,
       era: detectEra(battle),
+      image: BATTLE_IMAGES[slug]?.[0] || null,
     }));
   }, []);
 
@@ -179,9 +181,16 @@ export default function BattleListPage() {
             >
               <Link
                 href={`/tran-chien/${battle.slug}`}
-                className="group block rounded-2xl border border-gold-400/10 bg-wood-800/40 p-6 hover:border-gold-400/30 hover:bg-wood-800/70 transition-all duration-300 hover:shadow-[0_0_40px_rgba(200,169,110,0.06)] h-full"
+                className="group flex flex-col rounded-2xl border border-gold-400/10 bg-wood-800/40 hover:border-gold-400/30 hover:bg-wood-800/70 transition-all duration-300 hover:shadow-[0_0_40px_rgba(200,169,110,0.06)] h-full overflow-hidden"
               >
-                <div className="flex items-start justify-between gap-4 mb-4">
+                {battle.image && (
+                  <div className="w-full h-48 overflow-hidden relative border-b border-gold-400/10 shrink-0">
+                    <div className="absolute inset-0 bg-wood-900/20 group-hover:bg-transparent transition-colors z-10" />
+                    <img src={battle.image} alt={battle.name} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+                  </div>
+                )}
+                <div className="p-6 flex-1 flex flex-col">
+                  <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={`rounded-full px-3 py-1 text-[9px] font-black uppercase tracking-widest border ${ERA_COLORS[battle.era]}`}>
                       {battle.era}
@@ -213,6 +222,7 @@ export default function BattleListPage() {
                   <span className="text-[10px] font-black text-gold-400 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
                     Xem chi tiết →
                   </span>
+                </div>
                 </div>
               </Link>
             </motion.div>
