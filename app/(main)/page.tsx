@@ -302,10 +302,6 @@ const handleMapClick = (name: string, centroid: [number, number]) => {
           </aside>
         </div>
       </main>
-
-      <footer className="w-full border-t border-gold-400/10 bg-wood-950 py-16 px-8 mt-20 text-center">
-        <p className="text-[10px] uppercase tracking-[0.5em] text-gold-400/30 font-bold">Việt Nam Sử Việt © 2024</p>
-      </footer>
     </div>
   );
 }
