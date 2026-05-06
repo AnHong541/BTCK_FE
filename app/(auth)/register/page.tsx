@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 
@@ -11,6 +12,12 @@ interface PasswordInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   show: boolean;
   onToggle: () => void;
+}
+
+interface RegisteredUser {
+  username: string;
+  email: string;
+  password: string;
 }
 
 function PasswordInput({ value, onChange, show, onToggle }: PasswordInputProps) {
@@ -40,6 +47,8 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const router = useRouter();
 
   const validate = () => {
     if (!formData.username || !formData.password || !formData.confirmPassword || !formData.email) {
@@ -50,6 +59,14 @@ export default function RegisterPage() {
     }
     if (formData.password.length < 6) {
       return 'Mật khẩu phải có ít nhất 6 ký tự';
+    }
+    // Check if username already exists
+    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]') as RegisteredUser[];
+    if (existingUsers.some(u => u.username === formData.username)) {
+      return 'Tên tài khoản đã tồn tại';
+    }
+    if (existingUsers.some(u => u.email === formData.email)) {
+      return 'Email đã được đăng ký';
     }
     return '';
   };
@@ -62,9 +79,30 @@ export default function RegisterPage() {
       return;
     }
     setError('');
+    setSuccess('');
     setIsLoading(true);
     try {
-      // TODO: Implement actual registration logic
+      // Get existing users
+      const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]') as RegisteredUser[];
+      
+      // Add new user
+      const newUser: RegisteredUser = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      };
+      existingUsers.push(newUser);
+      
+      // Save to localStorage
+      localStorage.setItem('registeredUsers', JSON.stringify(existingUsers));
+      
+      setSuccess('Đăng ký thành công! Chuyển hướng đến trang đăng nhập...');
+      setFormData({ username: '', email: '', password: '', confirmPassword: '' });
+      
+      // Redirect to login after 2 seconds
+      setTimeout(() => {
+        router.push('/login');
+      }, 2000);
     } catch (error) {
       setError('Đăng ký thất bại. Vui lòng thử lại.');
     } finally {
@@ -77,6 +115,7 @@ export default function RegisterPage() {
       <div className="bg-wood-800 border border-gold-500/20 rounded-lg shadow-2xl shadow-black/50 p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-gold-400 mb-8 text-center">Đăng ký</h1>
         {error && <div className="mb-4 p-3 bg-red-900/50 border border-red-500/50 text-red-200 rounded-lg text-sm">{error}</div>}
+        {success && <div className="mb-4 p-3 bg-green-900/50 border border-green-500/50 text-green-200 rounded-lg text-sm">{success}</div>}
         <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="text"

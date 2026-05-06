@@ -93,6 +93,11 @@ export interface HistoryItem {
   significance?: string;
 }
 
+export interface User {
+  username: string;
+  role: 'admin' | 'user';
+}
+
 export interface MilitaryForce {
   id: string;
   name: string;

@@ -3,6 +3,7 @@
 import { BATTLE_DETAILS, BATTLE_TIMELINE } from "@/lib/data";
 import { BATTLE_IMAGES, BATTLE_MAPS } from "@/lib/media";
 import { fetchBattleImages, addBattleImage, deleteBattleImage, BattleImageApi } from "@/app/services/imageService";
+import { useAuth } from "@/app/context/AuthContext";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { notFound, useParams } from "next/navigation";
@@ -26,6 +27,7 @@ import {
 export default function BattlePage() {
   const params = useParams<{ slug: string }>();
   const battle = BATTLE_DETAILS[params.slug];
+  const { user } = useAuth();
   
   const [apiImages, setApiImages] = useState<BattleImageApi[]>([]);
   const [showAddImage, setShowAddImage] = useState(false);
@@ -213,39 +215,41 @@ export default function BattlePage() {
             )}
 
             {/* Thêm ảnh mới */}
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gold-400 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold-400"></span>
-                  {allMedia.length === 0 ? "Chưa có ảnh tư liệu" : "Tư liệu minh họa"}
-                </h3>
-                <button 
-                  onClick={() => setShowAddImage(!showAddImage)} 
-                  className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-wood-900 bg-gold-400 px-3 py-1.5 rounded-lg hover:bg-gold-300 transition-colors"
-                >
-                  <PlusOutlined /> Thêm ảnh
-                </button>
-              </div>
-
-              {showAddImage && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="flex gap-2 mb-8">
-                  <input 
-                    type="text" 
-                    value={newImageUrl} 
-                    onChange={(e) => setNewImageUrl(e.target.value)} 
-                    placeholder="Dán đường link ảnh (URL) vào đây..."
-                    className="flex-1 bg-wood-800/80 border border-gold-400/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold-400/50 text-gold-100 placeholder:text-gold-100/30"
-                  />
+            {user?.role === 'admin' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gold-400 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gold-400"></span>
+                    {allMedia.length === 0 ? "Chưa có ảnh tư liệu" : "Tư liệu minh họa"}
+                  </h3>
                   <button 
-                    onClick={handleAddImage} 
-                    disabled={isSubmitting || !newImageUrl}
-                    className="bg-gold-400 text-wood-900 px-5 py-3 rounded-xl text-sm font-bold hover:bg-gold-300 disabled:opacity-50 transition-all flex items-center justify-center min-w-[60px]"
+                    onClick={() => setShowAddImage(!showAddImage)} 
+                    className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-wood-900 bg-gold-400 px-3 py-1.5 rounded-lg hover:bg-gold-300 transition-colors"
                   >
-                    {isSubmitting ? <LoadingOutlined /> : <CheckOutlined />}
+                    <PlusOutlined /> Thêm ảnh
                   </button>
-                </motion.div>
-              )}
-            </motion.div>
+                </div>
+
+                {showAddImage && (
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="flex gap-2 mb-8">
+                    <input 
+                      type="text" 
+                      value={newImageUrl} 
+                      onChange={(e) => setNewImageUrl(e.target.value)} 
+                      placeholder="Dán đường link ảnh (URL) vào đây..."
+                      className="flex-1 bg-wood-800/80 border border-gold-400/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold-400/50 text-gold-100 placeholder:text-gold-100/30"
+                    />
+                    <button 
+                      onClick={handleAddImage} 
+                      disabled={isSubmitting || !newImageUrl}
+                      className="bg-gold-400 text-wood-900 px-5 py-3 rounded-xl text-sm font-bold hover:bg-gold-300 disabled:opacity-50 transition-all flex items-center justify-center min-w-[60px]"
+                    >
+                      {isSubmitting ? <LoadingOutlined /> : <CheckOutlined />}
+                    </button>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
 
             {/* Description */}
             <motion.div

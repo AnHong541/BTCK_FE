@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useAuth } from "@/app/context/AuthContext";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -13,16 +16,32 @@ function cn(...inputs: ClassValue[]) {
 const MENU_ITEMS = [
   { href: "/", label: "Trang chủ" },
   { href: "/timeline", label: "Dòng thời gian" },
+  { href: "/tran-chien", label: "Trận chiến" },
   { href: "/about", label: "Giới thiệu" },
   { href: "/contact", label: "Liên hệ" },
 ];
 
 export default function Header() {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setShowUserMenu(false);
+    router.push("/");
+  };
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="sticky top-0 z-50 w-full border-b border-gold-400/20 bg-wood-900/80 backdrop-blur-md"
+      className="sticky top-0 z-[100] w-full border-b border-gold-400/20 bg-wood-900/80 backdrop-blur-md"
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
         {/* Logo Section */}
@@ -54,11 +73,48 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Action Button */}
+        {/* Action Button / User Menu */}
         <div className="flex items-center gap-4">
-          <Link href="/login" className="rounded-full border border-gold-400/40 bg-gold-400/10 px-6 py-2 text-xs font-semibold uppercase tracking-wider text-gold-200 transition-all hover:bg-gold-400 hover:text-wood-900 active:scale-95 inline-block">
-            Đăng nhập
-          </Link>
+          {!isClient || !user ? (
+            <Link href="/login" className="rounded-full border border-gold-400/40 bg-gold-400/10 px-6 py-2 text-xs font-semibold uppercase tracking-wider text-gold-200 transition-all hover:bg-gold-400 hover:text-wood-900 active:scale-95 inline-block">
+              Đăng nhập
+            </Link>
+          ) : (
+            <div className="relative">
+              <button
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gold-200 transition-all hover:bg-gold-400 hover:text-wood-900 active:scale-95"
+              >
+                <UserOutlined className="text-sm" />
+                <span>{user.username}</span>
+              </button>
+
+              {/* User Menu Dropdown */}
+              {showUserMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute right-0 mt-2 w-48 rounded-lg border border-gold-400/20 bg-wood-800 shadow-xl overflow-hidden z-[1000]"
+                >
+                  <div className="px-4 py-3 border-b border-gold-400/10">
+                    <p className="text-xs text-gold-400 font-semibold">Tài khoản</p>
+                    <p className="text-sm text-gold-200 font-bold mt-1">{user.username}</p>
+                    <p className="text-xs text-gold-100/60 mt-1">
+                      {user.role === "admin" ? "Quản trị viên" : "Người dùng thường"}
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-4 py-3 text-left text-sm font-semibold text-gold-200 hover:bg-wood-700/50 transition flex items-center gap-2"
+                  >
+                    <LogoutOutlined className="text-base" />
+                    Đăng xuất
+                  </button>
+                </motion.div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </motion.header>

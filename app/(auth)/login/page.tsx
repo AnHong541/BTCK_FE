@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+import { useAuth } from '@/app/context/AuthContext';
 
 const inputClass = 'w-full px-4 py-3 border border-gold-500/30 bg-wood-700 rounded-lg focus:ring-2 focus:ring-gold-400 focus:border-transparent transition text-gold-100 font-semibold placeholder:text-gold-100/50';
 
@@ -11,6 +13,12 @@ interface PasswordInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   show: boolean;
   onToggle: () => void;
+}
+
+interface RegisteredUser {
+  username: string;
+  email: string;
+  password: string;
 }
 
 function PasswordInput({ value, onChange, show, onToggle }: PasswordInputProps) {
@@ -40,12 +48,37 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const { login } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     setIsLoading(true);
     try {
-      // TODO: Implement actual login logic
+      if (!username.trim() || !password.trim()) {
+        setError('Vui lòng nhập tên tài khoản và mật khẩu.');
+        setIsLoading(false);
+        return;
+      }
+      
+      // Check if it's the admin account
+      if (username === 'TaivaAndeptrai' && password === '1234567') {
+        login(username, 'admin');
+        router.push('/');
+        return;
+      }
+      
+      // Check registered users
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]') as RegisteredUser[];
+      const user = registeredUsers.find(u => u.username === username && u.password === password);
+      
+      if (user) {
+        login(username, 'user');
+        router.push('/');
+      } else {
+        setError('Tên tài khoản hoặc mật khẩu không chính xác.');
+      }
     } catch (err) {
       setError('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
     } finally {
@@ -64,9 +97,11 @@ export default function LoginPage() {
             placeholder="Tên tài khoản"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            disabled={isLoading}
             className={inputClass}
           />
           <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} show={showPassword} onToggle={() => setShowPassword(!showPassword)} />
+
           <button
             type="submit"
             disabled={isLoading}
