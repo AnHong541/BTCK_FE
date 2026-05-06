@@ -70,14 +70,25 @@ export default function BattlePage() {
 
   const handleDeleteImage = async (id: string) => {
     if (!confirm("Bạn có chắc chắn muốn xóa ảnh này không?")) return;
+    
     setDeletingId(id);
-    const success = await deleteBattleImage(id);
-    if (success) {
-      setApiImages(apiImages.filter(img => img.id !== id));
-    } else {
-      alert("Lỗi khi xóa ảnh. Vui lòng thử lại!");
+    console.log(`Bắt đầu xóa ảnh với ID: ${id}`);
+    
+    try {
+      const success = await deleteBattleImage(id);
+      if (success) {
+        console.log("Xóa ảnh thành công trên API");
+        setApiImages(prev => prev.filter(img => img.id !== id));
+      } else {
+        console.error("API trả về kết quả thất bại khi xóa ảnh");
+        alert("Lỗi khi xóa ảnh từ máy chủ. Vui lòng thử lại!");
+      }
+    } catch (error) {
+      console.error("Lỗi ngoại lệ khi thực hiện xóa ảnh:", error);
+      alert("Đã xảy ra lỗi không mong muốn. Vui lòng kiểm tra kết nối mạng!");
+    } finally {
+      setDeletingId(null);
     }
-    setDeletingId(null);
   };
 
   const allSlugs = Object.keys(BATTLE_DETAILS);
@@ -195,14 +206,18 @@ export default function BattlePage() {
                         className="w-full h-auto object-cover"
                         style={{ maxHeight: '500px' }}
                       />
-                      {media.isApi && media.id && (
+                      {user?.role === 'admin' && media.isApi && media.id && (
                         <button
-                          onClick={() => handleDeleteImage(media.id!)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleDeleteImage(media.id!);
+                          }}
                           disabled={deletingId === media.id}
-                          className="absolute top-4 right-4 bg-red-500/80 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 disabled:opacity-50"
-                          title="Xóa ảnh"
+                          className="absolute top-4 right-4 z-30 bg-red-500 text-white p-2.5 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 hover:scale-110 active:scale-95 disabled:opacity-50 flex items-center justify-center border border-white/20"
+                          title="Xóa ảnh này"
                         >
-                          {deletingId === media.id ? <LoadingOutlined /> : <DeleteOutlined />}
+                          {deletingId === media.id ? <LoadingOutlined /> : <DeleteOutlined className="text-lg" />}
                         </button>
                       )}
                     </div>
