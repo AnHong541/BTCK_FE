@@ -16,7 +16,10 @@ import {
   ArrowLeftOutlined,
   CompassOutlined,
   HistoryOutlined,
-  BookOutlined
+  BookOutlined,
+  MenuOutlined,
+  CloseOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 
 export default function TrangChu() {
@@ -26,6 +29,7 @@ export default function TrangChu() {
   const [selectedProvince, setSelectedProvince] = useState<BattleInfo | null>(null);
   const [selectedBattle, setSelectedBattle] = useState<BattleDetail | null>(null);
   const [mapPosition, setMapPosition] = useState({ center: [106, 16] as [number, number], zoom: 1 });
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const provinces = useMemo(() => {
     const eraData = MAP_DATA[era] || {};
@@ -113,28 +117,28 @@ const handleMapClick = (name: string, centroid: [number, number]) => {
 
   return (
     <div className="min-h-screen bg-wood-900 font-body text-gold-100 flex flex-col">
-      <header className="sticky top-0 z-50 w-full border-b border-gold-400/10 bg-wood-900/90 backdrop-blur-md py-4 px-8 flex items-center justify-between shadow-lg">
-        <div className="flex items-center gap-4">
-          <div className="h-10 w-10 rounded-lg bg-gold-400 flex items-center justify-center text-wood-900 text-xl font-black">
+      <header className="sticky top-[80px] z-40 w-full border-b border-gold-400/10 bg-wood-900/90 backdrop-blur-md py-4 px-4 md:px-8 flex items-center justify-between shadow-lg">
+        <div className="flex items-center gap-3 md:gap-4">
+          <div className="h-8 w-8 md:h-10 md:w-10 rounded-lg bg-gold-400 flex items-center justify-center text-wood-900 text-lg md:text-xl font-black">
             VN
           </div>
           <div>
-            <h1 className="text-xl font-display font-bold text-gold-100 tracking-tight cursor-pointer" onClick={() => { setSelectedProvince(null); setSelectedBattle(null); setMapPosition({center:[106, 16], zoom: 1}); }}>LỊCH SỬ ĐẤU TRANH CỦA VIỆT NAM</h1>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-gold-400/60 font-bold">Bản đồ tương tác lịch sử</p>
+            <h1 className="text-lg md:text-xl font-display font-bold text-gold-100 tracking-tight cursor-pointer" onClick={() => { setSelectedProvince(null); setSelectedBattle(null); setMapPosition({center:[106, 16], zoom: 1}); }}>LỊCH SỬ VIỆT NAM</h1>
+            <p className="text-[8px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] text-gold-400/60 font-bold">Bản đồ tương tác</p>
           </div>
         </div>
         
-        <nav className="hidden md:flex items-center gap-8">
-          <EraButton active={era === 'khangphap'} onClick={() => {setEra("khangphap"); setSelectedProvince(null); setSelectedBattle(null);}} label="Chống Pháp" />
-          <EraButton active={era === 'khangmy'} onClick={() => {setEra("khangmy"); setSelectedProvince(null); setSelectedBattle(null);}} label="Chống Mỹ" />
-        </nav>
+        <div className="flex md:flex items-center gap-2 md:gap-8">
+          <EraButton active={era === 'khangphap'} onClick={() => {setEra("khangphap"); setSelectedProvince(null); setSelectedBattle(null);}} label="Pháp" />
+          <EraButton active={era === 'khangmy'} onClick={() => {setEra("khangmy"); setSelectedProvince(null); setSelectedBattle(null);}} label="Mỹ" />
+        </div>
       </header>
 
-      <main className="flex-1 max-w-[1400px] mx-auto w-full px-6 py-10">
-        <div className="flex flex-col lg:flex-row gap-10">
+      <main className="flex-1 max-w-[1400px] mx-auto w-full px-4 md:px-6 py-6 md:py-10">
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-10">
           
-          <div className="flex-1 relative order-2 lg:order-1">
-            <div className="sticky top-32 w-full h-[500px] md:h-[700px] rounded-3xl border border-gold-400/20 bg-wood-800/20 overflow-visible shadow-2xl">
+          <div className="flex-1 relative order-1 lg:order-1">
+            <div className="sticky top-20 md:top-32 w-full h-[400px] md:h-[700px] rounded-3xl border border-gold-400/20 bg-wood-800/20 overflow-visible shadow-2xl">
               <VietnamMap 
                 center={mapPosition.center} 
                 zoom={mapPosition.zoom} 
@@ -158,8 +162,8 @@ const handleMapClick = (name: string, centroid: [number, number]) => {
             </div>
           </div>
 
-          <aside className="w-full lg:w-[450px] order-1 lg:order-2">
-            <div className="bg-wood-800/40 rounded-3xl border border-gold-400/10 p-8 shadow-xl backdrop-blur-md min-h-[600px]">
+          <aside className="w-full lg:w-[450px] order-2 lg:order-2">
+            <div className="bg-wood-800/40 rounded-3xl border border-gold-400/10 p-5 md:p-8 shadow-xl backdrop-blur-md min-h-[400px] md:min-h-[600px]">
               
               <AnimatePresence mode="wait">
                 {selectedBattle ? (
@@ -303,6 +307,20 @@ const handleMapClick = (name: string, centroid: [number, number]) => {
         <p className="text-[10px] uppercase tracking-[0.5em] text-gold-400/30 font-bold">Việt Nam Sử Việt © 2024</p>
       </footer>
     </div>
+  );
+}
+
+function MobileNavLink({ href, icon, label, onClick }: { href: string, icon: React.ReactNode, label: string, onClick: () => void }) {
+  return (
+    <Link 
+      href={href} 
+      onClick={onClick}
+      className="flex items-center gap-4 py-4 px-4 rounded-xl border border-gold-400/5 bg-wood-800/40 text-gold-100 hover:bg-gold-400/10 transition-all group"
+    >
+      <span className="text-gold-400 text-lg group-hover:scale-110 transition-transform">{icon}</span>
+      <span className="text-sm font-bold tracking-wide">{label}</span>
+      <ArrowLeftOutlined className="ml-auto text-[10px] text-gold-400/30 rotate-180" />
+    </Link>
   );
 }
 
